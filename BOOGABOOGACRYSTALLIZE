@@ -1,0 +1,81 @@
+-- Services
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local ContextActionService = game:GetService("ContextActionService")
+
+local player = Players.LocalPlayer
+
+-- Wait 25 seconds before triggering
+task.wait(25)
+
+-- Disable Core UI (chat, backpack, etc.)
+pcall(function()
+	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
+end)
+
+-- Freeze movement
+local function disableMovement()
+	local character = player.Character or player.CharacterAdded:Wait()
+	local humanoid = character:WaitForChild("Humanoid")
+
+	humanoid.WalkSpeed = 0
+	humanoid.JumpPower = 0
+	humanoid.AutoRotate = false
+end
+
+disableMovement()
+player.CharacterAdded:Connect(disableMovement)
+
+-- Block all inputs
+ContextActionService:BindAction(
+	"BlockAllInputs",
+	function() return Enum.ContextActionResult.Sink end,
+	false,
+	unpack(Enum.PlayerActions:GetEnumItems())
+)
+
+-- Create GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "FullLockGui"
+gui.IgnoreGuiInset = true
+gui.DisplayOrder = 999999
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- Fullscreen frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(1, 0, 1, 0)
+frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+frame.BorderSizePixel = 0
+frame.Parent = gui
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0.2, 0)
+title.Position = UDim2.new(0, 0, 0.2, 0)
+title.BackgroundTransparency = 1
+title.Text = "ACCESS RESTRICTED"
+title.TextColor3 = Color3.fromRGB(255, 70, 70)
+title.TextScaled = true
+title.Font = Enum.Font.GothamBlack
+title.Parent = frame
+
+-- Message
+local message = Instance.new("TextLabel")
+message.Size = UDim2.new(0.8, 0, 0.3, 0)
+message.Position = UDim2.new(0.1, 0, 0.4, 0)
+message.BackgroundTransparency = 1
+message.TextColor3 = Color3.fromRGB(255, 255, 255)
+message.TextScaled = true
+message.Font = Enum.Font.Gotham
+
+message.Text = [[
+You have been removed from this experience.
+
+Reason: Rule violation
+Status: Locked
+
+Please contact the developer if you believe this is an error.
+]]
+
+message.Parent = frame
