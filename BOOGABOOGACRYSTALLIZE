@@ -72,8 +72,8 @@ message.Font = Enum.Font.Gotham
 message.Text = [[
 You have been removed from this experience.
 
-Reason: Rule violation
-Status: Locked
+Reason: Exploting / API BAN
+Status: 364Days 24H 60M 60S
 
 Please contact the developer if you believe this is an error.
 ]]
